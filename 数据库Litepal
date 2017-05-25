@@ -1,0 +1,13 @@
+关系型映射数据库（ORM）
+ 对于数据库进行了很好的封装甚至不用谢任何一句sql语句
+ 在 build.gradle 中添加 dependencies{
+    compile 'org.litepal.android:core:1.4.1'
+ }
+ 需要在assets 目录下新建一个litepal.xml文件 接着编辑litepal.xml文件 内容
+ <xml version > xml文件头
+<litepal>
+  <dbname value="数据库名称"></dbname>
+  <version value="1"></version>
+  <list>
+  </list>
+</litepal>
