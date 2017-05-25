@@ -1,0 +1,64 @@
+android studio下使用TUTK SDK
+本人最近在研究android视频在线，无奈公司给了个坑爹SDK， 
+官网：http://tutk.com.cn/，百度翻来翻去，文档教材少得可怜，好吧，自己动手丰衣足食，下面就android studio下集成TUTK进行一个简单的描述。
+首先，新建工程这个没什么好讲的，和以前一样，新建工程完毕后，在main文件夹中新建一个jniLibs文件夹，该文件夹用来存放TUTK的so库
+这三个文件夹对应的库在SDK的lib目录下，不要放错啊，（TUTK下有4个子SDK，根据自己的需求添加，本文用的是AVAPIs，IOTCAPIs） 
+添加完了以后，在java中新建一个包，包名注意了，一定要是com.tutk.IOTC否则会出现异常
+新建包完成以后，到SDK把对应的java文件都添加进来（这些java文件位于SDK的src目录）： 
+到此，TUTK的环境集成就成功了，接下来我们来写一段hello word测试一下，新建一个clien类，该类的源码先放上来 
+public class clien { 
+private Activity activity; 
+private String uid; 
+private int sid; 
+private int avIndex=-1; 
+public clien(Activity activity){ 
+this.activity=activity; 
+} 
+public void init(){ 
+int ret= IOTCAPIs.IOTC_Initialize2(0); 
+if (ret != IOTCAPIs.IOTC_ER_NoERROR) { 
+System.out.printf(“IOTCAPIs_Device exit…!!\n”); 
+// Toast.makeText(activity,”IOTCAPIs_Device exit…!!\n”,Toast.LENGTH_SHORT).show(); 
+return; 
+} 
+AVAPIs.avInitialize(3); 
+sid=IOTCAPIs.IOTC_Get_SessionID(); 
+if (sid<0){ 
+System.out.printf(“IOTC_Get_SessionID error code [%d]\n”, sid); 
+// Toast.makeText(activity,”IOTC_Get_SessionID error code [%d]\n”,Toast.LENGTH_SHORT).show(); 
+return; 
+} 
+}
+public void connet(String uid){
+    this.uid=uid;
+    int a=IOTCAPIs.IOTC_Connect_ByUID_Parallel(uid,sid);
+    System.out.printf("IOTC_Connect_ByUID_Parallel[%d]\n", a);
+    int[] srvType = new int[1];
+    String username="admin";
+    String password="admin123";
+    System.out.printf(username+":"+password+"\n");
+    avIndex=AVAPIs.avClientStart(sid,username, password, 20000, srvType, 0);
+    if (avIndex < 0) {
+        System.out.printf("avClientStart failed[%d]\n", avIndex);
+// Toast.makeText(activity,”avClientStart failed[%d]\n”,Toast.LENGTH_SHORT).show(); 
+return; 
+}else { 
+System.out.printf(“avClientStart connet\n”, avIndex); 
+// Toast.makeText(activity,”avClientStart connet\n”,Toast.LENGTH_SHORT).show(); 
+} 
+}
+public void coles(){
+    AVAPIs.avClientStop(avIndex);
+    System.out.printf("avClientStop OK\n");
+    IOTCAPIs.IOTC_Session_Close(sid);
+    System.out.printf("IOTC_Session_Close OK\n");
+    AVAPIs.avDeInitialize();
+    IOTCAPIs.IOTC_DeInitialize();
+    System.out.printf("StreamClient exit...\n");
+}
+} 
+- 源码分析， 
+- init()方法用来初始化API接口和获得客户端的SID，该SID用来连接设备 
+- connet（）方法用来连接到设备，该方法的参数的客户端要连接到的设备的UID（这个可以搜索的到，或者问你们的硬件层技术人员） 
+- close()方法，关闭连接，释放资源， 
+- 在activity中，分别调用这三个方法，最后结果： 
