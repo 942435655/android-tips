@@ -1,0 +1,9 @@
+1.在Project视图下面选择  src/main 在下面添加目录 jniLibs 文件夹 把.so文件复制进去
+2.在build.gradle中添加下面的几行代码
+sourceSets {    
+       main {    
+           jniLibs.srcDirs = ['libs']    
+       }    
+   }   
+3.然后选择 build目录下面选择 makeProject  
+以及.so的一个参考知识 ：  http://www.open-open.com/lib/view/open1440421271716.html
