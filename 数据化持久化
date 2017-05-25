@@ -19,4 +19,5 @@
                     如果向 sharedpreference中添加字符串使用 putString  或者 putBoolean 或者 putINt 
                     调用 apply方法 将添加的数据 提交 从而完成数据存储的操作
                     
-            
+ 3.Sqllite   sqliteopenHelper  抽象类 实现 oncreate 和   onupdate   创建升级数据库   getreadableDatabase 和 getWriteableDatabasee       
+  构造函数有四个参数 第一个 context 第二个  数据库名称 第三个 自定义cursor 一般为  第四个  参数为数据库版本号
