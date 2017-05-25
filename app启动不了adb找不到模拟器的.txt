@@ -1,0 +1,18 @@
+﻿在使用AS想运行app，点击run app后经常会出现这样的错误：
+
+error: could not install *smartsocket* listener: cannot bind to 127.0.0.1:5037
+
+could not read ok from ADB Server
+
+* failed to start daemon *
+
+error: cannot connect to daemon
+
+在浪费了一些时间后终于寻找到了解决方法，发现还没有特别详细的解决此问题的文章，在此整理记录出现的问题和具体解决问题的过程，同时也可以在别人出现同样问题时能方便地解决。
+在万能的百度上查了下，大部分都说是端口被占用了，把所有相关的连接助手关闭就可以了，可是关了还是依然无效，再次搜寻，发现把占用此端口的进程关闭了就可以了。
+
+下面是在windows系统下解决问题的有效方法。
+
+1.进入命令提示符下，输入：netstat -aon|findstr 5037，如下图所示，会出现被占用的5037端口的进程。
+2.再输入：tasklist /fi "PID eq 230672"，如下图所示，就会出现被占进程的具体描述。
+3.没错，就是adb进程，接着再输入：taskkill /pid 230672 /f，结束adb进程，再次点击run app即可看见模拟器了。
