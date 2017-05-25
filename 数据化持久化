@@ -1,0 +1,22 @@
+持久化 ： 
+1.sharedpreference   2.文件   3.数据库
+2.文件操作Context里面提供了一个 openFileOutput的方法  用于将 数据存储到指定的文件中去
+ 所有的文件都默认存储到/data/data/包名/files/目录下
+ 主要有两种模式可以选择   MODE_PRIVATE 和 MODE_APPEND   
+ openFileOutpu 返回 FileOutputStream 对象  得到此对象就可以通过java流将数据写到文件中了
+ 通过 fileoutStream 和 bufferedWriter 写数据到文件中
+ 当然Context 还提供了将数据从文件中读取出来的方法 openFileInput()方法 参数为读取的文件名 得到fileinputStream 对象 bufferedReader 
+ 系统会自动到/data/data/包名/files/目录下 去寻找文件  得到对象再通过java流读出数据 
+ 1.sharedpreference 存储
+   sharedpreference使用键值对来存储数据 并且支持不同的数据类型存储 如果存储的类型是 整形 取出来的类型也是整形的
+   如果存储的类型是字符串 取出来的也是字符串
+     三种方法可以获取Context 
+     1) Context 类中的getSharedpreferences （第一个参数是文件名称，第二个参数是操作模式）  sharedpreference 文件都是放在/data/data/包名/shared_prefs/
+      MODE_PRIVATE 也可以为0
+      2）Actovity中的getpreferences(）方法  参数是接受模式参数  默认为当前类名作为sharedpreferences的文件名
+      3）preferenceManager 中的getdefaultSharedPreferences（）方法 静态方法   接受COntext 参数 自动为当前类名作为sharedpreferences的文件名
+       得到sharedpreference 之后 调用 edit() 获取sharedpreference.editor方法   
+                    如果向 sharedpreference中添加字符串使用 putString  或者 putBoolean 或者 putINt 
+                    调用 apply方法 将添加的数据 提交 从而完成数据存储的操作
+                    
+            
