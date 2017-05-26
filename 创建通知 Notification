@@ -1,4 +1,12 @@
 通知的基本用法   
 1.可以通过Context的 getsystemService（）传入 Context.Notificatin_service 获得 notificationManager     
 2.创建一个Notification   通过 NotificationCompat.builder(Context)....一系列的方法      详情见 第八章源代码 
+3.当点击了 通知时 想要进行加载网页的时候需要 pendingIntent  来完成后续的操作
+pendingIntent  里面有getActivity  getbroadcast  以及 getService 方法 
+NotificationCompat.builder.setvibrate 设置i震动
+.setlights 设置前闪灯 
+.setDefault 设置默认
+.setstyle 里面写入 长的文字以及图片
+.setpriority 设置重要程度
+
 还可以使用 友盟的SDK来完成 
