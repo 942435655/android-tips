@@ -11,3 +11,11 @@
   <list>
   </list>
 </litepal>
+之后创建类
+假如我们创建了Book类   里面有很多字段名称 价格 出版社 
+需要在 litepal.xml中设置 属性       在<list><mapping class="包名.Book"></list>
+
+在  oncreate 方法中 写出 litePal.getDatabase(); 即可以完成 创建的数据库。
+如果添加了其他的表 则需要创建新的类 之后需要 在list中添加 mapping 同时需要 修改数据库的版本  
+当需要增删改查的时候需要 将book类继承于Datasupport类
+之后我们就可以在 MainActivity中 创建Book对象 之后调用set方法  即可以插入数据到表中。
