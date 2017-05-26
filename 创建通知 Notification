@@ -1,0 +1,4 @@
+通知的基本用法   
+1.可以通过Context的 getsystemService（）传入 Context.Notificatin_service 获得 notificationManager     
+2.创建一个Notification   通过 NotificationCompat.builder(Context)....一系列的方法      详情见 第八章源代码 
+还可以使用 友盟的SDK来完成 
